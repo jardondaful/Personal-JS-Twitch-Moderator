@@ -23,67 +23,6 @@ const options =
 	channels: [ CHANNEL_NAME ]
 }
 
-//sets up variable client
-const client = new tmi.Client(options)
-
-//connects bot to the client
-client.connect()
-
-//Executes onDisconnectedHandler() function (written later in program) when the bot disconnects from my Twitch channel
-client.on('disconnected', (reason) => {onDisconnectedHandler(reason)})
-
-//Executes onSubscriptionHandler() function (written later in program) when Twitch client receives a notification that a viewer cheered my channel any amount of bits
-client.on('connected', (address, port) => {onConnectedHandler(address, port)})
-
-//Executes onSubscriptionHandler() function (written later in program) when Twitch client receives a notification that a viewer cheered my channel any amount of bits
-client.on('hosted', (channel, username, viewers, autohost) => {onHostedHandler(channel, username, viewers, autohost)})
-
-//Executes onSubscriptionHandler() function (written later in program) when Twitch client receives a notification that a viewer cheered my channel bits
-client.on('subscription', (channel, username, method, message, userstate) => {onSubscriptionHandler(channel, username, method, message, userstate)})
-
-//Executes onRaidedHandler() function (written later in program) when Twitch client receives a notification that a viewer cheered my channel bits
-client.on('raided', (channel, username, viewers) => {onRaidedHandler(channel, username, viewers)})
-
-//Executes onHostingHandler() function (written later in program) when Twitch client receives a notification that a viewer cheered my channel bits
-client.on('cheer', (channel, userstate, message) => {onCheerHandler(channel, userstate, message)})
-
-//Executes onGiftPaidUpgradeHandler() function (written later in program) when Twitch client receives a notification that a viewer gifted a subscription to my channel to someone else
-client.on('giftpaidupgrade', (channel, username, sender, userstate) => {onGiftPaidUpgradeHandler(channel, username, sender, userstate)})
-
-//Executes onHostingHandler() function (written later in program) when Twitch client receives a notification that a Twitch streamer is hosting my channel
-client.on('hosting', (channel, target, viewers) => {onHostingHandler(channel, target, viewers)})
-
-//Executes reconnectHandler() function (written later in program) when the bot is reconnecting to my channel
-client.on('reconnect', () => {reconnectHandler()})
-
-//Executes resubHandler() function (written later in program) when Twitch client receives a notification that a viewer has subscribed to my Twitch channel
-client.on('resub', (channel, username, months, message, userstate, methods) => {resubHandler(channel, username, months, message, userstate, methods)})
-
-//Executes subGiftHandler() function (written later in program) when Twitch client receives a notification that a viewer has subscribed to my Twitch channel
-client.on('subgift', (channel, username, streakMonths, recipient, methods, userstate) => {subGiftHandler(channel, username, streakMonths, recipient, methods, userstate)})
-
-//Executes code within when Twitch client receives a message from my channel
-client.on('message', (channel, userstate, message, self) => 
-{
-  if(self) 
-  {
-    return
-  }
-
-  if (userstate.username === BOT_USERNAME) 
-  {
-    console.log(`Not checking bot's messages.`)
-    return
-  }
-
-	if(message.toLowerCase() === '!hello') 
-  {
-    hello(channel, userstate)
-    return
-  }
-
-  onMessageHandler(channel, userstate, message, self)
-})
 
 //calls on checkTwitchChat to check most recent message sent by viewer
 function onMessageHandler (channel, userstate, message, self) 
@@ -91,16 +30,16 @@ function onMessageHandler (channel, userstate, message, self)
   checkTwitchChat(userstate, message, channel)
 }
 
-//Outputs on compiler that the bot disconnected from my channel
-function onDisconnectedHandler(reason) 
-{
-  console.log(`Disconnected: ${reason}`)
-}
-
 //Outputs on compiler that the bot conencted to my channel
 function onConnectedHandler(address, port) 
 {
   console.log(`Connected: ${address}:${port}`)
+}
+
+//Outputs on compiler that the bot disconnected from my channel
+function onDisconnectedHandler(reason) 
+{
+  console.log(`Disconnected: ${reason}`)
 }
 
 //Tells bot to give thanks to whoever is hosting my Twitch channel in chat
@@ -179,3 +118,66 @@ function checkTwitchChat(userstate, message, channel)
     client.deletemessage(channel, userstate.id)
   }
 }
+
+
+//sets up variable client
+const client = new tmi.Client(options)
+
+//connects bot to the client
+client.connect()
+
+//Executes onDisconnectedHandler() function (written later in program) when the bot disconnects from my Twitch channel
+client.on('disconnected', (reason) => {onDisconnectedHandler(reason)})
+
+//Executes onSubscriptionHandler() function (written later in program) when Twitch client receives a notification that a viewer cheered my channel any amount of bits
+client.on('connected', (address, port) => {onConnectedHandler(address, port)})
+
+//Executes onSubscriptionHandler() function (written later in program) when Twitch client receives a notification that a viewer cheered my channel any amount of bits
+client.on('hosted', (channel, username, viewers, autohost) => {onHostedHandler(channel, username, viewers, autohost)})
+
+//Executes onSubscriptionHandler() function (written later in program) when Twitch client receives a notification that a viewer cheered my channel bits
+client.on('subscription', (channel, username, method, message, userstate) => {onSubscriptionHandler(channel, username, method, message, userstate)})
+
+//Executes onRaidedHandler() function (written later in program) when Twitch client receives a notification that a viewer cheered my channel bits
+client.on('raided', (channel, username, viewers) => {onRaidedHandler(channel, username, viewers)})
+
+//Executes onHostingHandler() function (written later in program) when Twitch client receives a notification that a viewer cheered my channel bits
+client.on('cheer', (channel, userstate, message) => {onCheerHandler(channel, userstate, message)})
+
+//Executes onGiftPaidUpgradeHandler() function (written later in program) when Twitch client receives a notification that a viewer gifted a subscription to my channel to someone else
+client.on('giftpaidupgrade', (channel, username, sender, userstate) => {onGiftPaidUpgradeHandler(channel, username, sender, userstate)})
+
+//Executes onHostingHandler() function (written later in program) when Twitch client receives a notification that a Twitch streamer is hosting my channel
+client.on('hosting', (channel, target, viewers) => {onHostingHandler(channel, target, viewers)})
+
+//Executes reconnectHandler() function (written later in program) when the bot is reconnecting to my channel
+client.on('reconnect', () => {reconnectHandler()})
+
+//Executes resubHandler() function (written later in program) when Twitch client receives a notification that a viewer has subscribed to my Twitch channel
+client.on('resub', (channel, username, months, message, userstate, methods) => {resubHandler(channel, username, months, message, userstate, methods)})
+
+//Executes subGiftHandler() function (written later in program) when Twitch client receives a notification that a viewer has subscribed to my Twitch channel
+client.on('subgift', (channel, username, streakMonths, recipient, methods, userstate) => {subGiftHandler(channel, username, streakMonths, recipient, methods, userstate)})
+
+//Executes code within when Twitch client receives a message from my channel
+client.on('message', (channel, userstate, message, self) => 
+{
+  if(self) 
+  {
+    return
+  }
+
+  if (userstate.username === BOT_USERNAME) 
+  {
+    console.log(`Not checking bot's messages.`)
+    return
+  }
+
+	if(message.toLowerCase() === '!hello') 
+  {
+    hello(channel, userstate)
+    return
+  }
+
+  onMessageHandler(channel, userstate, message, self)
+})
