@@ -191,7 +191,7 @@ client.on('message', (channel, userstate, message, self) =>
     return
   }
 
-	if(message.toLowerCase() === '!hello') 
+  if(message.toLowerCase() === '!hello') 
   {
     hello_notification(channel, userstate)
     return
