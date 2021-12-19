@@ -12,15 +12,15 @@ const options =
     timeout: 180000,
     reconnectDecay: 1.4,
     reconnectInterval: 1000,
-	},
+  },
 
-	identity: 
+  identity: 
   {
-		username: BOT_USERNAME,
-		password: OAUTH_TOKEN
-	},
+    username: BOT_USERNAME,
+    password: OAUTH_TOKEN
+  },
   
-	channels: [ CHANNEL_NAME ]
+  channels: [ CHANNEL_NAME ]
 }
 
 
