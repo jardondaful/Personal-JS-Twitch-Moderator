@@ -4,8 +4,8 @@ import { BOT_USERNAME , OAUTH_TOKEN, CHANNEL_NAME, BLOCKED_WORDS } from './chann
 //Specifications for bot so it knows which Twitch channel to connect to and how to do so
 const options = 
 {
-	options: { debug: true },
-	connection: 
+    options: { debug: true },
+    connection: 
   {
     reconnect: true,
     secure: true,
